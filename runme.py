@@ -8,7 +8,6 @@ import argparse
 import vcard
 
 #Globals .... hisss
-vcardlist=[]
 spacer = "    "
 #defs
 vcard_begin = "BEGIN:VCARD\n"
@@ -52,28 +51,38 @@ def parsingsanitycheck(Numoflinesreadfromfile,Numofobjesctsparsed):
     return
 
 def buildvcardobjs(parsedobjs):
+    vcardlist = []
     for i,item in enumerate(parsedobjs):
-        vcardlist.append(vcard.vcard(i,item))
+        obj = vcard.vcard(i,item)
+        obj.buildvcard()
+        vcardlist.append(obj)
 
     if len(parsedobjs) == len(vcardlist):
-        return
+        return vcardlist
     else:
         print(spacer,"[XX] - Number of Parsedobjs and Built vCard objects dont match in buildvcardobjs")
         sys.exit(-1)
 #Main routine
 
+def comparerawoutput(vcardlist):
+    thing = ""
+    for item in vcardlist:
+        thing = thing + item.raw
+    sys.stdout.write (thing)
+    sys.stdout.flush()
+    return
+
 def parseinputs(*args,**kwargs):
     parser = argparse.ArgumentParser(description='vCard Processor')
     parser.add_argument('inputfile', nargs='+', help='input file to process')
     args = parser.parse_args()
-    input_dict = {"inputfile":args.inputfile[0]}
+    input_dict = {"inputfile":args.inputfile[0]} # first pos is input file 
     return input_dict
 
 if __name__ == "__main__":
     inputs = parseinputs()
-    print (inputs['inputfile'])
     contents = readfile(inputs['inputfile'])
     objs     = parse(contents)
     #parsingsanitycheck(len(contents),len(objs))
-    buildvcardobjs(objs)
-
+    vcardlist = buildvcardobjs(objs)
+    comparerawoutput(vcardlist) 
