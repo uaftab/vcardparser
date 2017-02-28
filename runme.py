@@ -50,9 +50,18 @@ def parsingsanitycheck(Numoflinesreadfromfile,Numofobjesctsparsed):
 
     return
 
+def buildvcardobjs(parsedobjs):
+    for i,item in enumerate(parsedobjs):
+        vcardlist.append(vcard.vcard(i,item))
 
+    if len(parsedobjs) == len(vcardlist):
+        return
+    else:
+        print(spacer,"[XX] - Number of Parsedobjs and Built vCard objects dont match in buildvcardobjs")
+        sys.exit(-1)
 #Main routine
 if __name__ == "__main__":
     contents = readfile('vcardfile.vcard')
     objs     = parse(contents)
     #parsingsanitycheck(len(contents),len(objs))
+    buildvcardobjs(objs)
