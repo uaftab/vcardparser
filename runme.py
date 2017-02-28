@@ -2,6 +2,7 @@
 
 #System level imports
 import sys
+import argparse
 
 #Imports
 import vcard
@@ -60,8 +61,19 @@ def buildvcardobjs(parsedobjs):
         print(spacer,"[XX] - Number of Parsedobjs and Built vCard objects dont match in buildvcardobjs")
         sys.exit(-1)
 #Main routine
+
+def parseinputs(*args,**kwargs):
+    parser = argparse.ArgumentParser(description='vCard Processor')
+    parser.add_argument('inputfile', nargs='+', help='input file to process')
+    args = parser.parse_args()
+    input_dict = {"inputfile":args.inputfile[0]}
+    return input_dict
+
 if __name__ == "__main__":
-    contents = readfile('vcardfile.vcard')
+    inputs = parseinputs()
+    print (inputs['inputfile'])
+    contents = readfile(inputs['inputfile'])
     objs     = parse(contents)
     #parsingsanitycheck(len(contents),len(objs))
     buildvcardobjs(objs)
+
