@@ -72,6 +72,10 @@ def comparerawoutput(vcardlist):
     sys.stdout.flush()
     return
 
+def debugprints(vcardlist):
+    for item in vcardlist:
+        print(item.name)
+
 def parseinputs(*args,**kwargs):
     parser = argparse.ArgumentParser(description='vCard Processor')
     parser.add_argument('inputfile', nargs='+', help='input file to process')
@@ -85,4 +89,6 @@ if __name__ == "__main__":
     objs     = parse(contents)
     #parsingsanitycheck(len(contents),len(objs))
     vcardlist = buildvcardobjs(objs)
-    comparerawoutput(vcardlist) 
+    #comparerawoutput(vcardlist) 
+#    debugprints(vcardlist)
+
