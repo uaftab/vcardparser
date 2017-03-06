@@ -95,6 +95,6 @@ if __name__ == "__main__":
     #comparerawoutput(vcardlist) 
     uniquevcards = uniquecontacts(vcardlist)
     #debugprints(uniquevcards)
-    #comparerawoutput(uniquevcards)
+    comparerawoutput(uniquevcards)
     print ("VcardsInput:",len(vcardlist))
     print ("Unique:",len(uniquevcards))
