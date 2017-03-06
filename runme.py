@@ -62,7 +62,10 @@ def buildvcardobjs(parsedobjs):
     else:
         print(spacer,"[XX] - Number of Parsedobjs and Built vCard objects dont match in buildvcardobjs")
         sys.exit(-1)
-#Main routine
+
+def uniquecontacts(vcardlist):
+    uniqueset = set(vcardlist)
+    return uniqueset
 
 def comparerawoutput(vcardlist):
     thing = ""
@@ -74,7 +77,7 @@ def comparerawoutput(vcardlist):
 
 def debugprints(vcardlist):
     for item in vcardlist:
-        print(item.name)
+        print("[",item.uid,"] --- ",item.name)
 
 def parseinputs(*args,**kwargs):
     parser = argparse.ArgumentParser(description='vCard Processor')
@@ -90,5 +93,8 @@ if __name__ == "__main__":
     #parsingsanitycheck(len(contents),len(objs))
     vcardlist = buildvcardobjs(objs)
     #comparerawoutput(vcardlist) 
-#    debugprints(vcardlist)
-
+    uniquevcards = uniquecontacts(vcardlist)
+    #debugprints(uniquevcards)
+    #comparerawoutput(uniquevcards)
+    print ("VcardsInput:",len(vcardlist))
+    print ("Unique:",len(uniquevcards))

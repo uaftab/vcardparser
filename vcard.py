@@ -17,14 +17,23 @@ class vcard:
         self.raw = ""
         for item in self.rep_list:
             self.raw=self.raw+str(item)
+    
+            # build some fields
             string = str(item)
             pos_name  = string.find(DEF_VCARD_FIELD_NAME)
             pos_fname = string.find(DEF_VCARD_FIELD_FNAME)
             if pos_name == 1:
                 #print (pos_name)
                 self.name = string[(len(DEF_VCARD_FIELD_NAME)+1):]
-                print (self.name)
+#                print (self.name)
             if pos_fname == 1:
                 self.fname = string[len(DEF_VCARD_FIELD_FNAME)+1:]
-        #build some attributes 
-
+    
+    def __hash__(self):
+        return hash(str(self.name))
+        
+    def __eq__(self,other):
+        if (hash(str(self.name)) == other):
+            return True
+        else:
+            return False
